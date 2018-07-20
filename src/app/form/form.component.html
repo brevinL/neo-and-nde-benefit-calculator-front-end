@@ -1,0 +1,27 @@
+<form novalidate *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()" [hidden]="submitted">
+	<div formArrayName="people">
+		<div *ngFor="let ctrl of people.controls; index as i; last as isLast">
+			<div *ngIf="current == i">
+				<h2>{{ctrl.controls.role.value}}</h2>
+				<div [formGroupName]="i">
+					<div *ngFor="let question of questions" class="form-group" role="group">
+						<label>{{question.label}}</label>
+						<small class="form-text text-muted" role="help"></small>
+						<div class="input-group mb-2 mr-sm-2">
+							<div class="input-group-prepend" *ngIf="question.type === 'currency'">
+								<div class="input-group-text">$</div>
+							</div>
+							<input type="number" class="form-control" [formControlName]="question.key" [id]="question.key">
+						</div>
+					</div>
+				</div>
+				<div class="clearfix">
+					<button *ngIf="!isLast" role="button" type="button" class="btn btn-primary float-right ml-2" id="nextBtn" aria-label="" title="" (click)="next()">Next</button>
+					<button *ngIf="!isLast" role="button" type="button" class="btn btn-primary float-right ml-2" id="previousBtn" aria-label="" title="" (click)="previous()">Previous</button>
+					<button *ngIf="isLast" role="button" type="submit" class="btn btn-primary float-right ml-2" id="submitBtn" aria-label="Submit Form" title="Submit Form">Submit</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+<summary *ngIf="records" [records]="records"></summary>

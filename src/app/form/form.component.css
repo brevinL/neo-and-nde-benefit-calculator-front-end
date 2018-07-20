@@ -1,0 +1,4 @@
+.accordion>div {
+	display: flex; 
+	margin: 0 ; 
+}

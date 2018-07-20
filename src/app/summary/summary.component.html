@@ -1,0 +1,25 @@
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th scope="col">Record</th>
+			<th scope="col">Worker Benefit</th>
+			<th scope="col">Spousal Benefit</th>
+			<th scope="col">Survivor Benefit</th>
+			<th scope="col">Non-Covered Pension</th>
+			<th scope="col">Retirement Income</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let record of records;">
+			<th scope="row">{{record.person_id}}</th>
+			<td>{{record.final_primary_insurance_amount.amount | currency }}</td>
+			<td>{{record.spousal_insurance_benefit.amount | currency }}</td>
+			<td>{{record.survivor_insurance_benefit.amount | currency }}</td>
+			<td>{{record.monthly_non_covered_pension.amount | currency }}</td>
+			<td>{{record.benefit.amount | currency }}</td>
+		</tr>
+	</tbody>
+</table>
+<div class="clearfix">
+	<button role="button" type="submit" class="btn btn-primary float-right ml-2" id="stepByStepBtn" aria-label="View Step by Step Calculation" title="View Step-by-Step Calculation">View Step-by-Step Calculation</button>
+</div>
