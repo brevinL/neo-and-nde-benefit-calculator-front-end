@@ -6,7 +6,7 @@ import { Record, Respondent, Money, Role, Relationship, RelationshipType } from 
 import { CalculatorService } from '../calculator.service';
 
 @Component({
-	selector: 'calculator',
+	selector: 'calculator-form',
 	templateUrl: './form.component.html',
 	styleUrls: ['./form.component.css'],
 	providers: [QuestionService, QuestionControlService],
@@ -14,10 +14,11 @@ import { CalculatorService } from '../calculator.service';
 })
 export class FormComponent implements OnInit {
 	questions: any[];
-	form: FormGroup;
+	forms: FormArray;
 	records: Record[];
+	currentForm: FormGroup;
 
-	current: number;
+	private currentPage: number = 0;
 
 	constructor(
 		private fb: FormBuilder, 
@@ -27,20 +28,16 @@ export class FormComponent implements OnInit {
 
 	ngOnInit() {
 		this.questions = this.questionService.questions;
-		this.form = this.buildForm();
-		this.current = 0;
+		this.forms = this.buildRespondentForms();
+		this.currentForm = this.forms.at(0) as FormGroup;
 	}
 
-	buildForm(): FormGroup {
-		return this.fb.group({
-			people: this.fb.array([
-				this.initPerson(Role.BENEFICIARY),
-				this.initPerson(Role.SPOUSE)
-			])
-		});
+	buildRespondentForms(): FormArray {
+		return this.fb.array([
+			this.initPerson(Role.BENEFICIARY),
+			this.initPerson(Role.SPOUSE)
+		]);
 	}
-
-	get people(): FormArray { return this.form.get('people') as FormArray; }
 
 	initPerson(role: string): FormGroup { 
 		let formGroup = this.qcs.toFormGroup(this.questions);
@@ -49,17 +46,13 @@ export class FormComponent implements OnInit {
 	}
 
 	scrollToTop() {
-		window.scrollTo(0, 0);
+		window.scrollTo({ left: 0, top: 0, behavior: 'smooth' });
 	}
 
-	previous(): void {
+	changeForm(currentPage: number) {
+		this.currentPage = currentPage - 1;
+		this.currentForm = this.forms.at(this.currentPage) as FormGroup;
 		this.scrollToTop();
-		this.current--;
-	}
-
-	next(): void {
-		this.scrollToTop();
-		this.current++;
 	}
 
 	onSubmit(): void {
@@ -71,7 +64,7 @@ export class FormComponent implements OnInit {
 	}
 
 	prepareToSaveRespondents(): Respondent[] {
-		const formModel = this.form.value;
+		const formModel = this.forms.value;
 		const respondents: Respondent[] = formModel.people.map((person, index) => { 
 			return new Respondent({
 				id: index,
@@ -90,8 +83,9 @@ export class FormComponent implements OnInit {
 		return respondents;
 	}
 
+	//re-write so that there is an unique set of pairs only for each respondent
 	prepareToSaveRelationships(): Relationship[] {
-		const formModel = this.form.value;
+		const formModel = this.forms.value;
 		const nonBeneficiaryModels = formModel.people.filter(person => person.role != Role.BENEFICIARY);
 		const relationships: Relationship[] = nonBeneficiaryModels.map((nonBeneficiary, index) => { 
 			return new Relationship({

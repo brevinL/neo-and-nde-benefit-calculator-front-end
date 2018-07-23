@@ -5,8 +5,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormRoutingModule } from './form-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { FormComponent } from './form.component';
-import { SummaryModule } from '../summary/summary.module';
 import { CalculatorService } from '../calculator.service';
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
 	imports: [ 
@@ -15,11 +16,10 @@ import { CalculatorService } from '../calculator.service';
 		FormsModule, 
 		ReactiveFormsModule,
 		FormRoutingModule,
-		SummaryModule
+		NgbModule
 	],
-	declarations: [ 
-		FormComponent
-	],
+	exports: [ FormComponent ],
+	declarations: [ FormComponent ],
 	providers: [ CalculatorService ]
 })
 export class FormModule { }
