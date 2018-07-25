@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation} from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { QuestionService } from '../shared/question.service';
 import { QuestionControlService } from '../shared/question-control.service';
@@ -13,12 +13,11 @@ import { CalculatorService } from '../calculator.service';
 	encapsulation: ViewEncapsulation.None
 })
 export class FormComponent implements OnInit {
-	questions: any[];
-	forms: FormArray;
-	records: Record[];
-	currentForm: FormGroup;
-
-	private currentPage: number = 0;
+	questions: any[];
+	forms: FormArray;
+	currentForm: FormGroup;
+	currentPage: number = 0; 
+	@Output() records = new EventEmitter<Record[]>();
 
 	constructor(
 		private fb: FormBuilder, 
@@ -27,6 +26,7 @@ export class FormComponent implements OnInit {
 		private calculatorService: CalculatorService) { }
 
 	ngOnInit() {
+		this.scrollToTop();
 		this.questions = this.questionService.questions;
 		this.forms = this.buildRespondentForms();
 		this.currentForm = this.forms.at(0) as FormGroup;
@@ -59,13 +59,14 @@ export class FormComponent implements OnInit {
 		let respondents: Respondent[] = this.prepareToSaveRespondents();
 		let relationships: Relationship[] = this.prepareToSaveRelationships();
 		this.calculatorService.summary(respondents, relationships).subscribe(
-			records => this.records = records
-		);
+			records => {
+				this.records.emit(records);
+			});
 	}
 
 	prepareToSaveRespondents(): Respondent[] {
 		const formModel = this.forms.value;
-		const respondents: Respondent[] = formModel.people.map((person, index) => { 
+		const respondents: Respondent[] = formModel.map((person, index) => { 
 			return new Respondent({
 				id: index,
 				year_of_birth: 1954,
@@ -84,9 +85,10 @@ export class FormComponent implements OnInit {
 	}
 
 	//re-write so that there is an unique set of pairs only for each respondent
+	//https://www.geeksforgeeks.org/maximizing-unique-pairs-two-arrays/
 	prepareToSaveRelationships(): Relationship[] {
 		const formModel = this.forms.value;
-		const nonBeneficiaryModels = formModel.people.filter(person => person.role != Role.BENEFICIARY);
+		const nonBeneficiaryModels = formModel.filter(person => person.role != Role.BENEFICIARY);
 		const relationships: Relationship[] = nonBeneficiaryModels.map((nonBeneficiary, index) => { 
 			return new Relationship({
 				person1_id: 0, 

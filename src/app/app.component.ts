@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { Record, DetailRecord } from './models';
 
 @Component({
 	selector: 'app-root',
@@ -8,4 +9,14 @@ import { Component, ViewEncapsulation } from '@angular/core';
 })
 export class AppComponent {
 	title = 'Non-Covered Earnings Offset and Non-Covered Dual Entitlement Benefit Calculations';
+	records: Record[];
+	detailRecords: DetailRecord[];
+
+	onSubmit(records: Record[]) {
+		this.records = records;
+	}
+
+	viewStepByStep(detailRecords: DetailRecord[]) {
+		this.detailRecords = detailRecords;
+	}
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { Record } from '../models';
 import { getRecords } from '../models/testing';
@@ -9,12 +9,8 @@ import { getRecords } from '../models/testing';
 	styleUrls: ['./summary.component.css'],
 	providers: [CurrencyPipe]
 })
-export class SummaryComponent implements OnInit {
+export class SummaryComponent {
 	@Input() records: Record[];
 
 	constructor() { }
-
-	ngOnInit() {
-		this.records = getRecords();
-	}
 }

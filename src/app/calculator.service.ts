@@ -5,33 +5,27 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Respondent, Relationship, IRecord, Record, } from './models';
 import { Observable, of } from 'rxjs';
-
-declare const _: any;
+import { environment } from '../environments/environment';
 
 const headersConfig = {
 	headers: new HttpHeaders({
-		'Content-Type': 'application/json',
-		'Access-Control-Allow-Origin': '*',
-		'Access-Control-Allow-Headers': 'access-control-allow-origin'
+		'Content-Type': 'application/json'
 	})
 };
 
+const API_URL = environment.apiUrl;
+
 @Injectable()
 export class CalculatorService {
-	private url: string = "api/neo-and-nde-benefit-calculator";
+	private url: string = `api/neo-and-nde-benefit-calculator`;
 
-	constructor(private http: HttpClient,
-	@Optional() @Inject(APP_BASE_HREF) origin: string) { 
-		this.url = `${origin}/${this.url}`;
-	}
+	constructor(private http: HttpClient) {}
 
-	summary(respondents: Respondent[], relationships: Relationship[]): Observable<IRecord[]> {
+	summary(respondents: Respondent[], relationships: Relationship[]): Observable<Record[]> {
 		let request = JSON.stringify({'respondents': respondents, 'relationships': relationships});
-		return this.http.post(`${this.url}/summary/`, request)
+		return this.http.post(`${API_URL}/${this.url}/summary/`, request, headersConfig)
 			.pipe(
-				map((response: {"records": IRecord[]}) => {
-				 	return response.records;
-				})
+				map((response: {"records": IRecord[]}) => response.records.map((record) => new Record(record)))
 			);
 	}
 

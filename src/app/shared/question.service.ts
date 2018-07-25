@@ -3,6 +3,7 @@ import { QuestionBase }     from './question-base';
 import { NumberQuestion } from './question-number';
 import { CurrencyQuestion } from './question-currency';
 
+// mocked QuestionService
 @Injectable()
 export class QuestionService {
 
@@ -11,26 +12,30 @@ export class QuestionService {
 	get questions(): QuestionBase<number>[] {
 
 		let questions: QuestionBase<number>[] = [
-			new CurrencyQuestion({
+			new NumberQuestion({
 				key: 'years_of_covered_earnings',
+				value: '15',
 				label: 'Years of Covered Earnings',
 				required: true,
 				order: 1
 			}),
 			new CurrencyQuestion({
 				key: 'annual_covered_earning',
+				value: '30000.00',
 				label: 'Annual Covered Earnings',
 				required: true,
 				order: 2
 			}),
-			new CurrencyQuestion({
+			new NumberQuestion({
 				key: 'years_of_non_covered_earnings',
+				value: '25',
 				label: 'Years of Non-Covered Earnings',
 				required: true,
 				order: 3
 			}),
 			new CurrencyQuestion({
 				key: 'annual_non_covered_earning',
+				value: '40000.00',
 				label: 'Annual Non-Covered Earnings',
 				required: true,
 				order: 4
@@ -43,6 +48,7 @@ export class QuestionService {
 			// }),
 			new NumberQuestion({
 				key: 'fraction_of_non_covered_aime_to_non_covered_pension',
+				value: '0.67',
 				label: 'Fraction Of Non-Covered AIME Converted to Non-Covered Pension',
 				required: true,
 				order: 6,
@@ -50,24 +56,28 @@ export class QuestionService {
 			}),
 			new NumberQuestion({
 				key: 'early_retirement_reduction',
+				value: '0.00',
 				label: 'Early Retirement Reduction (ERR) for Worker Benefit',
 				required: true,
 				order: 7
 			}),
 			new NumberQuestion({
 				key: 'delay_retirement_credit',
+				value: '0.00',
 				label: 'Delayed Retirement Credit (DRC)',
 				required: true,
 				order: 10
 			}),
 			new NumberQuestion({
 				key: 'survivor_early_retirement_reduction',
+				value: '0.00',
 				label: 'Early Retirement Reduction (ERR) for Survivor Benefit',
 				required: true,
 				order: 9
 			}),
 			new NumberQuestion({
 				key: 'spousal_early_retirement_reduction',
+				value: '0.00',
 				label: 'Early Retirement Reduction (ERR) for Spousal Benefit',
 				required: true,
 				order: 8

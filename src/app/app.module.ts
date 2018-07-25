@@ -1,4 +1,6 @@
-import { NgModule }      from '@angular/core';
+import { NgModule } from '@angular/core';
+import { APP_BASE_HREF } from '@angular/common';
+import { environment } from '../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent }  from './app.component';
 import { AppRoutingModule } from './app-routing.module';
