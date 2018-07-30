@@ -1,5 +1,6 @@
 <div class="container-fluid">
-	<calculator-form (records)="onSubmit($event)"></calculator-form>
-	<summary *ngIf="records" [records]="records" (detailRecords)="viewStepByStep($event)"></summary>
-	<step-by-step *ngIf="detailRecords" [detailRecords]="detailRecords"></step-by-step>
+	<router-outlet></router-outlet>
+	<!-- <calculator-form *ngSwitchCase="match_expression_1" (forms)="onSubmit($event)"></calculator-form>
+	<summary *ngSwitchCase="records" [records]="records" (viewStepByStep)="viewStepByStep($event)"></summary>
+	<step-by-step *ngSwitchCase="detailRecords" [detailRecords]="detailRecords" ()></step-by-step> -->
 </div>

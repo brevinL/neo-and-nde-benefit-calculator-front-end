@@ -1,7 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
-import { Record } from '../models';
-import { getRecords } from '../models/testing';
+import { Record, DetailRecord } from '../models';
 
 @Component({
 	selector: 'summary',
@@ -11,6 +10,11 @@ import { getRecords } from '../models/testing';
 })
 export class SummaryComponent {
 	@Input() records: Record[];
+	@Output() viewStepByStep = new EventEmitter<boolean>();
 
 	constructor() { }
+
+	clickedStepByStepBtn() {
+		this.viewStepByStep.emit(true);
+	}
 }
