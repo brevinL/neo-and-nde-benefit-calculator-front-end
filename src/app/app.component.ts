@@ -1,30 +1,33 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormArray } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Record, DetailRecord, Respondent, Money, Role, Relationship, RelationshipType } from './models';
 import { CalculatorService } from './calculator.service';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-root',
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.css'],
+	providers: [ CalculatorService ],
 	encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
-	title = 'Non-Covered Earnings Offset and Non-Covered Dual Entitlement Benefit Calculations';
-	forms: FormArray;
+	title: string = 'Non-Covered Earnings Offset and Non-Covered Dual Entitlement Benefit Calculations';
 	records: Record[];
 	detailRecords: DetailRecord[];
 
-	constructor(private calculatorService: CalculatorService) { }
+	constructor(
+		private calculatorService: CalculatorService,
+		private router: Router) {}
 
 	onSubmit(forms: FormArray): void {
-		this.forms = forms;
-
 		let respondents: Respondent[] = this.prepareToSaveRespondents(forms);
 		let relationships: Relationship[] = this.prepareToSaveRelationships(forms);
 		this.calculatorService.summary(respondents, relationships).subscribe(
 			records => {
 				this.records = records;
+				this.router.navigate(['/summary']);
 			});
 	}
 
@@ -62,9 +65,9 @@ export class AppComponent {
 		return relationships;
 	}
 
-	viewStepByStep(detailRecords: DetailRecord[]) {
-		let respondents: Respondent[] = this.prepareToSaveRespondents(this.forms);
-		let relationships: Relationship[] = this.prepareToSaveRelationships(this.forms);
+	viewStepByStep(forms: FormArray, detailRecords: DetailRecord[]) {
+		let respondents: Respondent[] = this.prepareToSaveRespondents(forms);
+		let relationships: Relationship[] = this.prepareToSaveRelationships(forms);
 		this.calculatorService.stepByStep(respondents, relationships).subscribe(
 			detailRecords => {
 				this.detailRecords = detailRecords;

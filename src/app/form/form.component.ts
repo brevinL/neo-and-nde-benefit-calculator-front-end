@@ -3,7 +3,6 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { QuestionService } from '../shared/question.service';
 import { QuestionControlService } from '../shared/question-control.service';
 import { Role } from '../models';
-import { RecordService } from '../record.service';
 
 @Component({
 	selector: 'calculator-form',
@@ -16,13 +15,12 @@ export class FormComponent implements OnInit {
 	respondents: FormArray;
 	currentForm: FormGroup;
 	currentPage: number = 0; 
-	@Output() forms = new EventEmitter<FormArray>();
+	// @Output() forms = new EventEmitter<FormArray>();
 
 	constructor(
 		private fb: FormBuilder, 
 		private questionService: QuestionService, 
-		private qcs: QuestionControlService,
-		private recordService: RecordService) { }
+		private qcs: QuestionControlService) { }
 
 	ngOnInit() {
 		this.scrollToTop();
@@ -55,6 +53,6 @@ export class FormComponent implements OnInit {
 	}
 
 	onSubmit(): void {
-		this.forms.emit(this.respondents);
+		// this.forms.emit(this.respondents);
 	}
 }

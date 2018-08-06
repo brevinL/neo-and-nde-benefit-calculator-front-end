@@ -31,7 +31,7 @@ import { StepByStepModule } from './step-by-step/step-by-step.module';
 		SummaryModule,
 		StepByStepModule
 	],
-	providers: [],
+	providers: [ ],
 	bootstrap: [ AppComponent ]
 })
 export class AppModule { }

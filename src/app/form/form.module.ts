@@ -6,7 +6,6 @@ import { FormRoutingModule } from './form-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { FormComponent } from './form.component';
 import { CalculatorService } from '../calculator.service';
-import { RecordService } from '../record.service';
 import { QuestionService } from '../shared/question.service';
 import { QuestionControlService } from '../shared/question-control.service';
 
@@ -25,7 +24,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 	declarations: [ FormComponent ],
 	providers: [ 
 		CalculatorService, 
-		RecordService, 
 		QuestionService, 
 		QuestionControlService 
 	]
