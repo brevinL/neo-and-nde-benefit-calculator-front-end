@@ -1,25 +1,29 @@
-<table class="table table-hover">
-	<thead>
-		<tr>
-			<th scope="col">Record</th>
-			<th scope="col">Worker Benefit</th>
-			<th scope="col">Spousal Benefit</th>
-			<th scope="col">Survivor Benefit</th>
-			<th scope="col">Non-Covered Pension</th>
-			<th scope="col">Retirement Income</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr *ngFor="let record of records;">
-			<th scope="row">{{record.person_id}}</th>
-			<td>{{record.final_primary_insurance_amount.amount | currency }}</td>
-			<td>{{record.spousal_insurance_benefit.amount | currency }}</td>
-			<td>{{record.survivor_insurance_benefit.amount | currency }}</td>
-			<td>{{record.monthly_non_covered_pension.amount | currency }}</td>
-			<td>{{record.benefit.amount | currency }}</td>
-		</tr>
-	</tbody>
-</table>
+<div *ngIf="record">
+	<h4>{{record.role}}</h4>
+	<ul class="list-group list-group-flush">
+		<li class="list-group-item clearfix">
+			<strong class="float-left">Worker Benefit:</strong>
+			<span class="float-right">{{record.final_primary_insurance_amount.amount | currency }}</span>
+		</li>
+		<li class="list-group-item clearfix">
+			<strong class="float-left">Spousal Benefit:</strong> 
+			<span class="float-right">{{record.spousal_insurance_benefit.amount | currency }}</span>
+		</li>
+		<li class="list-group-item">
+			<strong class="float-left">Survivor Benefit:</strong>
+			<span class="float-right">{{record.survivor_insurance_benefit.amount | currency }}</span>
+		</li>
+		<li class="list-group-item">
+			<strong class="float-left">Non-Covered Pension:</strong> 
+			<span class="float-right">{{record.monthly_non_covered_pension.amount | currency }}</span>
+		</li>
+		<li class="list-group-item">
+			<strong class="float-left">Retirement Income:</strong>
+			<span class="float-right">{{record.benefit.amount | currency }}</span>
+		</li>
+	</ul>
+</div>
+
 <div class="clearfix">
 	<button role="button" type="submit" class="btn btn-primary float-right ml-2" id="stepByStepBtn" aria-label="View Step by Step Calculation" title="View Step-by-Step Calculation" (click)="clickedStepByStepBtn()">View Step-by-Step Calculation</button>
 </div>

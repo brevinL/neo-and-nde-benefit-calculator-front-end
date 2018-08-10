@@ -1,5 +1,5 @@
-<form novalidate *ngIf="forms" (ngSubmit)="onSubmit()" [hidden]="submitted">
-	<h4>{{currentForm.controls.role.value}}</h4>
+<form novalidate (ngSubmit)="onSubmit()" [hidden]="submitted">
+	<h4>Respondent {{currentPage + 1}}</h4>
 	<div [formGroup]="currentForm">
 		<div *ngFor="let question of questions" class="form-group" role="group">
 			<label>{{question.label}}</label>

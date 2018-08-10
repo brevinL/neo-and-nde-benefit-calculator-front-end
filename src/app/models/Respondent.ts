@@ -1,13 +1,9 @@
 import { Money } from './Money';
 import { Relationship } from './Relationship';
-
-export enum Role {
-	BENEFICIARY = "Beneficiary",
-	SPOUSE = "Spouse" 
-}
+import { Role } from './Role';
 
 export interface IRespondent {
-	id: number;
+	id?: number;
 	year_of_birth: number;
 	years_of_covered_earnings: number;
 	annual_covered_earning: Money;

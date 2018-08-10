@@ -1,21 +1,30 @@
 export enum RelationshipType {
-	MARRIED = 'M'
+	MARRIED = 'M',
 }
 
 export interface IRelationship {
-	person1_id: number;
-	person2_id: number;
+	id?: number;
+	content_object1: string;
+	content_object2: string;
+	object_id1: number;
+	object_id2: number;
 	relationship_type: RelationshipType;
 }
 
 export class Relationship implements IRelationship {
-	person1_id: number;
-	person2_id: number;
+	id: number;
+	content_object1: string;
+	content_object2: string;
+	object_id1: number;
+	object_id2: number;
 	relationship_type: RelationshipType;
 
 	constructor(obj: IRelationship) {
-		this.person1_id = obj.person1_id;
-		this.person2_id = obj.person2_id;
+		this.id = obj.id;
+		this.content_object1 = obj.content_object1;
+		this.content_object2 = obj.content_object2;
+		this.object_id1 = obj.object_id1;
+		this.object_id2 = obj.object_id2;
 		this.relationship_type = obj.relationship_type;
 	}
 }

@@ -4,12 +4,16 @@ import { CommonModule } from '@angular/common';
 import { SummaryComponent } from './summary.component';
 import { SummaryRoutingModule } from './summary-routing.module';
 
+import { CalculatorService } from '../calculator.service';
+import { BenefitRuleService } from '../benefit-rule.service';
+
 @NgModule({
 	imports: [
 		CommonModule,
 		SummaryRoutingModule
 	],
 	declarations: [SummaryComponent],
-	exports: [SummaryComponent]
+	exports: [SummaryComponent],
+	providers: [CalculatorService, BenefitRuleService]
 })
 export class SummaryModule { }

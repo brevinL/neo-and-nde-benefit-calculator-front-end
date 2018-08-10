@@ -3,7 +3,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
-import { IRespondent, Respondent, Relationship, IRecord, Record, IDetailRecord, DetailRecord } from './models';
+import { Respondent, IRelationship, Relationship, IRecord, Record, IDetailRecord, DetailRecord } from './models';
 import { Observable, of } from 'rxjs';
 import { environment } from '../environments/environment';
 
@@ -16,38 +16,17 @@ const headersConfig = {
 const API_URL = environment.apiUrl;
 
 @Injectable()
-export class CalculatorService {
-	private url: string = `api/neo-and-nde-benefit-calculator`;
+export class BenefitRuleService {
+	private url: string = `api/benefit-rule`;
 
 	constructor(private http: HttpClient) {}
 
-	getRespondent(id): Observable<Respondent> {
-		return this.http.get(`${API_URL}/${this.url}/respondent/?respondent=${id}`, headersConfig)
+	addRelationship(relationships: Relationship): Observable<Relationship> {
+		let request = JSON.stringify(relationships);
+		return this.http.post(`${API_URL}/${this.url}/relationship/`, request, headersConfig)
 			.pipe(
-				map((response: IRespondent) => new Respondent(response))
-			);
-	}
-
-	addRespondents(respondents: Respondent[]) {
-		let request = JSON.stringify(respondents);
-		return this.http.post(`${API_URL}/${this.url}/respondent/`, request, headersConfig)
-			.pipe(
-				tap(_ => this.log(``)),
-				catchError(this.handleError<Respondent[]>('addRespondents', []))
-			);
-	}
-
-	summary(id: number): Observable<Record> {
-		return this.http.get(`${API_URL}/${this.url}/record/summary/?respondent=${id}`, headersConfig)
-			.pipe(
-				map((response: IRecord) => new Record(response))
-			);
-	}
-
-	stepByStep(respondent_id: number): Observable<DetailRecord[]> {
-		return this.http.get(`${API_URL}/${this.url}/record/stepByStep/?respondent=${respondent_id}`, headersConfig)
-			.pipe(
-				map((response: {'detail_records': IDetailRecord[]}) => response.detail_records.map((detailRecord) => new DetailRecord(detailRecord)))
+				map((response: IRelationship) => new Relationship(response)),
+				tap(_ => this.log(``))
 			);
 	}
 
