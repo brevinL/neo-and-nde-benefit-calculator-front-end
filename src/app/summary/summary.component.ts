@@ -28,14 +28,9 @@ export class SummaryComponent implements OnInit {
     	private route: ActivatedRoute) { }
 
 	ngOnInit() {
-		let relationship_id = +this.route.snapshot.paramMap.get('relationship');
-		this.benefitRuleService.getRelationship(relationship_id)
-			.subscribe(relationship => {
-				this.calculatorService.getRespondent(relationship.content_type1)
-					.subscribe(respondent => this.respondent = respondent);
-				this.calculatorService.summary(relationship.content_type1)
-  					.subscribe(record => this.record = record);
-			});
+		let respondent_id = +this.route.snapshot.paramMap.get('respondent');
+		this.calculatorService.summary(respondent_id)
+			.subscribe(record => this.record = record);
 	}
 
 	clickedStepByStepBtn() {

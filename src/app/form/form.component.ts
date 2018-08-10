@@ -63,7 +63,7 @@ export class FormComponent implements OnInit {
 			.subscribe(respondents => {
 				let relationship: Relationship = this.prepareToSaveRelationship(respondents as Respondent[]);
 				this.benefitRuleService.addRelationship(relationship)
-					.subscribe(relationship => this.router.navigate(['/summary', {relationship: relationship.id}]))
+					.subscribe(relationship => this.router.navigate(['/summary', {respondent: respondents[0].id}]))
 			});
 	}
 
