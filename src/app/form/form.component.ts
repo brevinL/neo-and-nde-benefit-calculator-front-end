@@ -6,6 +6,7 @@ import { QuestionControlService } from '../shared/question-control.service';
 import { Record, DetailRecord, Respondent, Money, Role, Relationship, RelationshipType } from '../models';
 import { CalculatorService } from '../calculator.service';
 import { BenefitRuleService } from '../benefit-rule.service';
+import { zip } from 'rxjs';
 
 @Component({
 	selector: 'calculator-form',
@@ -60,11 +61,14 @@ export class FormComponent implements OnInit {
 
 	onSubmit(): void {
 		let respondents: Respondent[] = this.prepareToSaveRespondents(this.respondents);
-		this.calculatorService.addRespondents(respondents)
+		
+		let respondent1$ = this.calculatorService.addRespondent(respondents[0]);
+		let respondent2$ = this.calculatorService.addRespondent(respondents[1]);
+		zip(respondent1$, respondent2$, (respondent1, respondent2) => [respondent1, respondent2])
 			.subscribe(respondents => {
 				let relationship: Relationship = this.prepareToSaveRelationship(respondents as Respondent[], this.respondents);
 				this.benefitRuleService.addRelationship(relationship)
-					.subscribe(relationship => this.router.navigate(['/summary', {relationship: relationship.id}]))
+					.subscribe(relationship => this.router.navigate(['/record', {relationship: relationship.id}]))
 			});
 	}
 

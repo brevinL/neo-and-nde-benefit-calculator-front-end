@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { StepByStepComponent } from './step-by-step.component';
+import { RelationshipComponent } from './relationship.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: StepByStepComponent
+    component: RelationshipComponent
   }
 ];
 
@@ -13,4 +13,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class StepByStepRoutingModule { }
+export class RelationshipRoutingModule { }

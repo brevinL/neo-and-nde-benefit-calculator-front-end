@@ -9,8 +9,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HotkeyModule } from 'angular2-hotkeys';
 
 import { FormModule } from './form/form.module';
-import { SummaryModule } from './summary/summary.module';
-import { StepByStepModule } from './step-by-step/step-by-step.module';
+import { RelationshipModule } from './relationship/relationship.module';
 
 @NgModule({
 	declarations: [ 
@@ -28,8 +27,7 @@ import { StepByStepModule } from './step-by-step/step-by-step.module';
 		HotkeyModule.forRoot(),
 		
 		FormModule,
-		SummaryModule,
-		StepByStepModule
+		RelationshipModule
 	],
 	providers: [ ],
 	bootstrap: [ AppComponent ]

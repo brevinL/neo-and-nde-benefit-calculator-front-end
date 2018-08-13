@@ -13,7 +13,11 @@ export class Instruction {
 
 	constructor(obj: IInstruction) {
 		this.description = obj.description;
-		this.expression_set = obj.expression_set.map(expression => new Expression(expression));
 		this.order = obj.order;
+		if(obj.hasOwnProperty('expression_set')) {
+			obj.expression_set.map(expression => new Expression(expression)).sort((a,b) => a.order - b.order);
+		} else {
+			this.expression_set = [];
+		}
 	}
 }

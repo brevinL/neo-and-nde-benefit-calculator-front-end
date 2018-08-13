@@ -13,7 +13,7 @@ const headersConfig = {
 	})
 };
 
-const API_URL = environment.apiUrl;
+const API_URL = environment.api_url;
 
 @Injectable()
 export class BenefitRuleService {
@@ -25,14 +25,24 @@ export class BenefitRuleService {
 		let request = JSON.stringify(relationships);
 		return this.http.post(`${API_URL}/${this.url}/relationship/`, request, headersConfig)
 			.pipe(
-				map((response: IRelationship) => new Relationship(response))
+				map((response: IRelationship) => new Relationship(response)),
+				catchError(this.handleError<Relationship>('addRelationship'))
 			);
 	}
 
 	getRelationship(id: number): Observable<Relationship> {
 		return this.http.get(`${API_URL}/${this.url}/relationship/${id}/`, headersConfig)
 			.pipe(
-				map((response: IRelationship) => new Relationship(response))
+				map((response: IRelationship) => new Relationship(response)),
+				catchError(this.handleError<Relationship>('getRelationship'))
+			);
+	}
+
+	getRecord(id: number): Observable<Record> {
+		return this.http.get(`${API_URL}/${this.url}/record/summary/?respondent=${id}`, headersConfig)
+			.pipe(
+				map((response: IRecord) => new Record(response)),
+				catchError(this.handleError<Record>('getRecord'))
 			);
 	}
 

@@ -13,7 +13,7 @@ const headersConfig = {
 	})
 };
 
-const API_URL = environment.apiUrl;
+const API_URL = environment.api_url;
 
 @Injectable()
 export class CalculatorService {
@@ -24,33 +24,25 @@ export class CalculatorService {
 	getRespondent(id): Observable<Respondent> {
 		return this.http.get(`${API_URL}/${this.url}/respondent/${id}/`, headersConfig)
 			.pipe(
-				map((response: IRespondent) => new Respondent(response))
+				map((response: IRespondent) => new Respondent(response)),
+				catchError(this.handleError<Respondent>('getRespondent'))
 			);
 	}
 
-	addRespondents(respondents: Respondent[]) {
-		let request = JSON.stringify(respondents);
+	addRespondent(respondent: Respondent): Observable<Respondent> {
+		let request = JSON.stringify(respondent);
 		return this.http.post(`${API_URL}/${this.url}/respondent/`, request, headersConfig)
 			.pipe(
-				tap(_ => this.log(``)),
-				catchError(this.handleError<Respondent[]>('addRespondents', []))
-			);
-	}
-
-	summary(id: number): Observable<Record> {
-		return this.http.get(`${API_URL}/${this.url}/record/summary/?respondent=${id}`, headersConfig)
-			.pipe(
-				map((response: IRecord) => new Record(response))
+				map((response: IRespondent) => new Respondent(respondent)),
+				catchError(this.handleError<Respondent>('addRespondents'))
 			);
 	}
 
 	stepByStep(respondent_id: number): Observable<DetailRecord> {
 		return this.http.get(`${API_URL}/${this.url}/detail-record/stepByStep/?respondent=${respondent_id}`, headersConfig)
 			.pipe(
-				map((response: IDetailRecord) => {
-					console.log(response);
-					return new DetailRecord(response);
-				})
+				map((response: IDetailRecord) => new DetailRecord(response)),
+				catchError(this.handleError<DetailRecord>('stepByStep'))
 			);
 	}
 
