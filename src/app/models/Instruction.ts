@@ -1,10 +1,19 @@
+import { Expression } from './Expression';
+
+interface IInstruction {
+	description: string;
+	expression_set: Expression[];
+	order: number;
+}
 
 export class Instruction {
 	description: string;
-	expressions: string[];
+	expression_set: Expression[];
+	order: number;
 
-	constructor(description: string, expressions: string[]) {
-		this.description = description;
-		this.expressions = expressions;
+	constructor(obj: IInstruction) {
+		this.description = obj.description;
+		this.expression_set = obj.expression_set.map(expression => new Expression(expression));
+		this.order = obj.order;
 	}
 }

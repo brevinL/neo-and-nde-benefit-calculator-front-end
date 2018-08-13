@@ -22,7 +22,7 @@ export class CalculatorService {
 	constructor(private http: HttpClient) {}
 
 	getRespondent(id): Observable<Respondent> {
-		return this.http.get(`${API_URL}/${this.url}/respondent/?respondent=${id}`, headersConfig)
+		return this.http.get(`${API_URL}/${this.url}/respondent/${id}/`, headersConfig)
 			.pipe(
 				map((response: IRespondent) => new Respondent(response))
 			);
@@ -44,10 +44,13 @@ export class CalculatorService {
 			);
 	}
 
-	stepByStep(respondent_id: number): Observable<DetailRecord[]> {
-		return this.http.get(`${API_URL}/${this.url}/record/stepByStep/?respondent=${respondent_id}`, headersConfig)
+	stepByStep(respondent_id: number): Observable<DetailRecord> {
+		return this.http.get(`${API_URL}/${this.url}/detail-record/stepByStep/?respondent=${respondent_id}`, headersConfig)
 			.pipe(
-				map((response: {'detail_records': IDetailRecord[]}) => response.detail_records.map((detailRecord) => new DetailRecord(detailRecord)))
+				map((response: IDetailRecord) => {
+					console.log(response);
+					return new DetailRecord(response);
+				})
 			);
 	}
 

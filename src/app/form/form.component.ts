@@ -37,13 +37,14 @@ export class FormComponent implements OnInit {
 
 	buildRespondentForms(): FormArray {
 		return this.fb.array([
-			this.initPerson(),
-			this.initPerson()
+			this.initPerson(Role.BENEFICIARY),
+			this.initPerson(Role.SPOUSE)
 		]);
 	}
 
-	initPerson(): FormGroup { 
+	initPerson(role: string): FormGroup { 
 		let formGroup = this.qcs.toFormGroup(this.questions);
+		formGroup.addControl('role', this.fb.control(role));
 		return formGroup;
 	}
 
@@ -61,9 +62,9 @@ export class FormComponent implements OnInit {
 		let respondents: Respondent[] = this.prepareToSaveRespondents(this.respondents);
 		this.calculatorService.addRespondents(respondents)
 			.subscribe(respondents => {
-				let relationship: Relationship = this.prepareToSaveRelationship(respondents as Respondent[]);
+				let relationship: Relationship = this.prepareToSaveRelationship(respondents as Respondent[], this.respondents);
 				this.benefitRuleService.addRelationship(relationship)
-					.subscribe(relationship => this.router.navigate(['/summary', {respondent: respondents[0].id}]))
+					.subscribe(relationship => this.router.navigate(['/summary', {relationship: relationship.id}]))
 			});
 	}
 
@@ -87,12 +88,15 @@ export class FormComponent implements OnInit {
 	}
 
 	//take care of content_object dynamically
-	prepareToSaveRelationship(respondents: Respondent[]): Relationship {
+	prepareToSaveRelationship(respondents: Respondent[], forms: FormArray): Relationship {
+		const formModel = forms.value;
 		const relationship: Relationship = new Relationship({
 				content_object1: `/api/neo-and-nde-benefit-calculator/respondent/${respondents[0].id}/`,
 				content_object2: `/api/neo-and-nde-benefit-calculator/respondent/${respondents[1].id}/`,
 				object_id1: respondents[0].id, 
 				object_id2: respondents[1].id, 
+				person1_role: formModel[0].role,
+				person2_role: formModel[1].role,
 				relationship_type: RelationshipType.MARRIED
 			});
 

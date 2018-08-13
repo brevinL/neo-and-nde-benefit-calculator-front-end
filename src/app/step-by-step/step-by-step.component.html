@@ -1,18 +1,16 @@
-<div class="mb-3">
-	<h4>Person {{currentRecord.person_id}}'s Benefit Detailed Record</h4>
-	<ngb-accordion [closeOthers]="true" activeIds="static-0">
-		<ngb-panel id="static-{{i}}" title="{{benefitRule.name}}" *ngFor="let benefitRule of currentRecord.procedure; index as i;">
-		  	<ng-template ngbPanelContent>
-				<ol>
-					<li *ngFor="let instruction of benefitRule.instructions; index as i;">
-						<span>{{instruction.description}}</span>
-						<ol>
-							<li type="a" *ngFor="let expression of instruction.expressions">{{expression}}</li>
-						</ol>
-					</li>
-				</ol>
-			</ng-template>
-		</ngb-panel>
-	</ngb-accordion>
-</div>
-<ngb-pagination [collectionSize]="detailRecords.length * 10" (pageChange)="changeRecord($event)" aria-label="Default pagination"></ngb-pagination>
+<!-- <h4>Person {{currentRecord.person_id}}'s Benefit Detailed Record</h4>
+<ngb-accordion [closeOthers]="true" activeIds="static-0">
+	<ngb-panel id="static-{{i}}" title="{{benefitRule.name}}" *ngFor="let benefitRule of currentRecord.procedure; index as i;">
+	  	<ng-template ngbPanelContent>
+			<ol>
+				<li *ngFor="let instruction of benefitRule.instructions; index as i;">
+					<span>{{instruction.description}}</span>
+					<ol>
+						<li type="a" *ngFor="let expression of instruction.expressions">{{expression}}</li>
+					</ol>
+				</li>
+			</ol>
+		</ng-template>
+	</ngb-panel>
+</ngb-accordion>
+ -->

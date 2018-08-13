@@ -25,8 +25,14 @@ export class BenefitRuleService {
 		let request = JSON.stringify(relationships);
 		return this.http.post(`${API_URL}/${this.url}/relationship/`, request, headersConfig)
 			.pipe(
-				map((response: IRelationship) => new Relationship(response)),
-				tap(_ => this.log(``))
+				map((response: IRelationship) => new Relationship(response))
+			);
+	}
+
+	getRelationship(id: number): Observable<Relationship> {
+		return this.http.get(`${API_URL}/${this.url}/relationship/${id}/`, headersConfig)
+			.pipe(
+				map((response: IRelationship) => new Relationship(response))
 			);
 	}
 
