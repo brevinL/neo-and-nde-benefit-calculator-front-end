@@ -64,7 +64,7 @@ export class FormComponent implements OnInit {
 		
 		let respondent1$ = this.calculatorService.addRespondent(respondents[0]);
 		let respondent2$ = this.calculatorService.addRespondent(respondents[1]);
-		zip(respondent1$, respondent2$, (respondent1, respondent2) => [respondent1, respondent2])
+		zip(respondent1$, respondent2$, (respondent1, respondent2) => [respondent1 as Respondent, respondent2 as Respondent])
 			.subscribe(respondents => {
 				let relationship: Relationship = this.prepareToSaveRelationship(respondents as Respondent[], this.respondents);
 				this.benefitRuleService.addRelationship(relationship)

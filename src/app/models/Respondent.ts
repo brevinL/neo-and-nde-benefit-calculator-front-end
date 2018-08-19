@@ -20,7 +20,7 @@ export interface IRespondent {
 }
 
 export class Respondent implements IRespondent {
-	public id: number;
+	public id?: number;
 	public alias?: string;
 	public year_of_birth: number;
 	public years_of_covered_earnings: number;

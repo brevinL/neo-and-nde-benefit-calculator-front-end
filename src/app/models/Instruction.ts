@@ -1,4 +1,5 @@
 import { Expression } from './Expression';
+import * as _ from "lodash";
 
 interface IInstruction {
 	description: string;
@@ -14,10 +15,8 @@ export class Instruction {
 	constructor(obj: IInstruction) {
 		this.description = obj.description;
 		this.order = obj.order;
-		if(obj.hasOwnProperty('expression_set')) {
-			obj.expression_set.map(expression => new Expression(expression)).sort((a,b) => a.order - b.order);
-		} else {
-			this.expression_set = [];
-		}
+		this.expression_set = _.sortBy(_.map(_.get(obj, 'expression_set', []), expression => {
+			return new Expression(expression)
+		}), 'order');
 	}
 }

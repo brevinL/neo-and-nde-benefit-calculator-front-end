@@ -38,14 +38,6 @@ export class BenefitRuleService {
 			);
 	}
 
-	getRecord(id: number): Observable<Record> {
-		return this.http.get(`${API_URL}/${this.url}/record/summary/?respondent=${id}`, headersConfig)
-			.pipe(
-				map((response: IRecord) => new Record(response)),
-				catchError(this.handleError<Record>('getRecord'))
-			);
-	}
-
 	/**
 	* Handle Http operation that failed.
 	* Let the app continue.

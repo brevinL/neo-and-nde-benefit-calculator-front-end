@@ -6,6 +6,7 @@
 			<detail-record *ngSwitchCase="'step-by-step'" [respondent_id]="relationship.object_id1"></detail-record>
 		</div>
 	</div>
+	<hr/>
 	<div class="clearfix">
 		<h4>{{relationship.person2_role}}</h4>
 		<div [ngSwitch]="state">
@@ -14,7 +15,7 @@
 		</div>
 	</div>
 </div>
-<div class="clearfix">
+<div class="clearfix mt-2">
 	<button role="button" type="btn" class="btn btn-primary float-left" (click)="goBack()">Go Back</button>
 	<div class="btn-group btn-group-toggle float-right" ngbRadioGroup name="radioBasic" [(ngModel)]="state">
 		<label ngbButtonLabel class="btn-primary">

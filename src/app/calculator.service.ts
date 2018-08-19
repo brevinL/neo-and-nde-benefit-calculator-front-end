@@ -33,8 +33,16 @@ export class CalculatorService {
 		let request = JSON.stringify(respondent);
 		return this.http.post(`${API_URL}/${this.url}/respondent/`, request, headersConfig)
 			.pipe(
-				map((response: IRespondent) => new Respondent(respondent)),
+				map((response: IRespondent) => new Respondent(response)),
 				catchError(this.handleError<Respondent>('addRespondents'))
+			);
+	}
+
+	getRecord(id: number): Observable<Record> {
+		return this.http.get(`${API_URL}/${this.url}/record/summary/?respondent=${id}`, headersConfig)
+			.pipe(
+				map((response: IRecord) => new Record(response)),
+				catchError(this.handleError<Record>('getRecord'))
 			);
 	}
 
